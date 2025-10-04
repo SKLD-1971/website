@@ -9,82 +9,48 @@
 
     <style>
         :root {
-            --accent: #22d3ee;
-            --accent-glow: rgba(34, 211, 238, 0.5);
-            --bg-dark: #111827;
-            --bg-light: #1F2937;
-            --border-color: rgba(255, 255, 255, 0.1);
-            --text-primary: #f9fafb;
-            --text-secondary: #9ca3af;
+            --primary-glow: #a958ff; --secondary-glow: #00c3ff; --dark-bg: #0d0c1d;
+            --light-bg: rgba(29, 26, 39, 0.5); --text-color: #f0f0f0;
+            --success-color: #00ffc3; --pending-color: #ffc107; --rejected-color: #ff3b5f;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            padding-top: 80px;
-            overflow: hidden; /* Key for aurora effect */
-            position: relative;
+            font-family: 'Poppins', sans-serif; background-color: var(--dark-bg); color: var(--text-color);
+            background-image: radial-gradient(circle at 10% 20%, rgba(169, 88, 255, 0.2), transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(0, 195, 255, 0.2), transparent 40%);
+            background-attachment: fixed; padding-top: 80px;
         }
-        /* --- New Aurora Background Effect --- */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            width: 100vmax;
-            height: 100vmax;
-            border-radius: 50%;
-            z-index: -1;
-            filter: blur(100px);
-            opacity: 0.15;
-            animation: pulse 15s infinite alternate;
-        }
-        body::before {
-            background-color: #7c3aed;
-            transform: translate(-60%, -60%);
-        }
-        body::after {
-            background-color: var(--accent);
-            transform: translate(0%, 0%);
-            animation-delay: -7.5s;
-        }
-        @keyframes pulse { 0% { transform: translate(-60%, -60%) scale(0.8); } 100% { transform: translate(0%, 0%) scale(1.2); } }
-        
         .top-nav {
-            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
-            background: rgba(17, 24, 39, 0.8);
-            backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: space-between;
-            padding: 0 30px; border-bottom: 1px solid var(--border-color); z-index: 1000;
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px; background: rgba(13, 12, 29, 0.7);
+            backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: space-between;
+            padding: 0 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); z-index: 1000;
         }
         .nav-left, .nav-right { display: flex; align-items: center; gap: 15px; }
         .server-logo-nav { height: 60px; margin-right: 10px; }
         .nav-link, .nav-button {
-            background: transparent; border: 1px solid #374151; color: var(--text-secondary);
+            background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--text-color);
             padding: 10px 15px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; white-space: nowrap;
         }
-        .nav-link:hover, .nav-button:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
+        .nav-link:hover, .nav-button:hover { border-color: var(--primary-glow); color: var(--primary-glow); box-shadow: 0 0 10px var(--primary-glow); }
         .user-info { display: flex; flex-direction: column; align-items: flex-end; font-size: 0.9em; }
-        .user-info .status-text { font-weight: 700; color: var(--accent); }
-        .main-container { width: 95%; max-width: 1200px; margin: 40px auto; position: relative; z-index: 1; height: calc(100vh - 80px); overflow-y: auto; padding-right: 10px; }
-        h1.main-title { font-size: 3em; text-align: center; margin-bottom: 30px; background: linear-gradient(45deg, var(--text-primary), var(--accent)); -webkit-background-clip: text; color: transparent; }
-        .content-card { background: var(--bg-light); border: 1px solid var(--border-color); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
-        h2, h3 { font-weight: 700; margin-bottom: 20px; color: var(--text-primary); } 
-        .form-group { margin-bottom: 20px; } 
-        label { display: block; margin-bottom: 8px; color: var(--text-secondary); font-weight:600; }
+        .user-info .status-text { font-weight: 700; background-image: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); -webkit-background-clip: text; color: transparent; }
+        .main-container { width: 95%; max-width: 1200px; margin: 40px auto; }
+        h1.main-title { font-size: 3em; text-align: center; margin-bottom: 30px; background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); -webkit-background-clip: text; color: transparent; }
+        .glass-card { background: var(--light-bg); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); padding: 30px; border-radius: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); }
+        h2, h3 { font-weight: 700; margin-bottom: 20px; } .form-group { margin-bottom: 20px; } label { display: block; margin-bottom: 8px; opacity: 0.9; font-weight:600; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        input, textarea, select { width: 100%; padding: 14px; background: #111827; border: 1px solid #374151; border-radius: 8px; color: var(--text-primary); font-family: 'Poppins', sans-serif; font-size: 1em; transition: all 0.3s ease; }
-        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+        input, textarea, select { width: 100%; padding: 14px; background: rgba(0, 0, 0, 0.3); border: 1px solid transparent; border-radius: 8px; color: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 1em; transition: all 0.3s ease; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary-glow); box-shadow: 0 0 15px rgba(169, 88, 255, 0.5); }
         input[readonly], textarea[readonly] { background: rgba(0,0,0,0.1); opacity: 0.7; pointer-events: none; }
-        button { width: 100%; padding: 14px; border: none; border-radius: 8px; color: #111827; font-weight: 700; font-size: 1.1em; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; background: var(--accent); }
-        button:hover { box-shadow: 0 0 20px var(--accent-glow); filter: brightness(1.1); }
+        button { width: 100%; padding: 14px; border: none; border-radius: 8px; color: white; font-weight: 600; font-size: 1.1em; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); }
+        button:hover { box-shadow: 0 0 20px rgba(169, 88, 255, 0.7); }
         .modal-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 2000; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .modal-content { position: relative; background: var(--bg-light); padding: 30px; border-radius: 12px; border: 1px solid var(--accent); text-align: center; width: 90%; max-width: 450px; animation: slideIn 0.4s ease-out; }
+        .modal-content { position: relative; background: var(--light-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--primary-glow); text-align: center; width: 90%; max-width: 450px; animation: slideIn 0.4s ease-out; }
         @keyframes slideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .close-modal-btn { position: absolute; top: 10px; right: 15px; font-size: 28px; color: #aaa; cursor: pointer; }
         .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
-        .form-switch-link { color: var(--accent); cursor: pointer; text-decoration: underline; margin-top: 15px; display: inline-block; }
+        .form-switch-link { color: var(--secondary-glow); cursor: pointer; text-decoration: underline; margin-top: 15px; display: inline-block; }
 
         .role-animated { font-weight: 700; background-size: 300% 300%; -webkit-background-clip: text; color: transparent; animation: shimmer 5s ease-in-out infinite; text-shadow: 0 0 5px rgba(0,0,0,0.7); }
         @keyframes shimmer { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
@@ -97,24 +63,23 @@
 
         .staff-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .role-card, .staff-card { margin-bottom: 20px; } .staff-card { text-align: left; padding: 25px; } .staff-card .grow-id { font-size: 1.5em; font-weight: 600; color: white; margin-bottom: 5px; }
-        .staff-card .role-title { font-size: 1.2em; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .staff-card .role-title { font-size: 1.2em; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
         .staff-card .staff-details { list-style: none; padding: 0; margin: 0; } .staff-card .staff-details li { margin-bottom: 8px; opacity: 0.8; display: flex; align-items: center; }
-        .staff-card .staff-details li i { color: var(--accent); margin-right: 10px; width: 16px; text-align: center; }
+        .staff-card .staff-details li i { color: var(--secondary-glow); margin-right: 10px; width: 16px; text-align: center; }
         
-        .task-progress { margin-bottom: 20px; } .task-progress p { font-size: 1.2em; } .progress-bar { width: 100%; height: 20px; background: #111827; border-radius: 10px; margin-top: 10px; }
-        .progress-bar-inner { height: 100%; border-radius: 10px; background: var(--accent); transition: width 0.5s ease; }
-        .task-list { margin-top: 20px; } .task-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #111827; border-radius: 8px; margin-bottom: 10px; }
-        .task-item a { color: var(--accent); } .task-status { font-weight: 600; padding: 5px 10px; border-radius: 5px; }
+        .task-progress { margin-bottom: 20px; } .task-progress p { font-size: 1.2em; } .progress-bar { width: 100%; height: 20px; background: rgba(0,0,0,0.3); border-radius: 10px; margin-top: 10px; }
+        .progress-bar-inner { height: 100%; border-radius: 10px; background: linear-gradient(45deg, var(--primary-glow), var(--secondary-glow)); transition: width 0.5s ease; }
+        .task-list { margin-top: 20px; } .task-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: rgba(0,0,0,0.2); border-radius: 8px; margin-bottom: 10px; }
+        .task-item a { color: var(--secondary-glow); } .task-status { font-weight: 600; padding: 5px 10px; border-radius: 5px; }
         .task-status.Pending { background: var(--pending-color); color: #000; } .task-status.Accepted { background: var(--success-color); color: #000; } .task-status.Rejected { background: var(--rejected-color); color: #fff; }
 
-        .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: var(--bg-light); border-radius: 12px; margin-bottom: 30px; }
-        .server-logo.small { height: 60px; } .logout-btn { background: var(--rejected-color); color:white; }
-        .toggle-switch { display: flex; align-items: center; gap: 10px; } .switch { position: relative; display: inline-block; width: 60px; height: 34px; } .switch input { opacity: 0; width: 0; height: 0; } .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #374151; transition: .4s; } .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; } input:checked + .slider { background-color: var(--accent); } input:checked + .slider:before { transform: translateX(26px); } .slider.round { border-radius: 34px; } .slider.round:before { border-radius: 50%; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 30px; background: var(--light-bg); border-radius: 12px; margin-bottom: 30px; }
+        .server-logo.small { height: 60px; } .logout-btn { background: var(--rejected-color); }
+        .toggle-switch { display: flex; align-items: center; gap: 10px; } .switch { position: relative; display: inline-block; width: 60px; height: 34px; } .switch input { opacity: 0; width: 0; height: 0; } .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; } .slider:before { position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; transition: .4s; } input:checked + .slider { background-color: #00ffc3; } input:checked + .slider:before { transform: translateX(26px); } .slider.round { border-radius: 34px; } .slider.round:before { border-radius: 50%; }
         .panel-header .controls { display: flex; align-items: center; gap: 20px; }
-        .log-table-container { width: 100%; background: var(--bg-light); border-radius: 12px; padding: 20px; overflow-x: auto; }
-        .applicant-log { margin-bottom:15px; } .log-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; padding:15px; border-radius:8px; transition: background-color 0.2s ease; } .log-header:hover { background-color: #374151; }
-        .applicant-details { display:none; margin-top:15px; padding-top: 15px; border-top: 1px solid var(--border-color); }
-        .applicant-details p { margin-bottom: 10px; } .applicant-details strong { color: var(--accent); }
+        .log-table-container { width: 100%; background: var(--light-bg); border-radius: 12px; padding: 20px; overflow-x: auto; }
+        .applicant-log { margin-bottom:15px; } .log-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; } .applicant-details { display:none; margin-top:15px; }
+        .applicant-details p { margin-bottom: 10px; } .applicant-details strong { color: var(--secondary-glow); }
         .empty-state { padding: 40px; text-align: center; opacity: 0.7; }
     </style>
 </head>
@@ -134,11 +99,11 @@
         <div class="nav-right" id="navRight"></div>
     </nav>
 
-    <div id="loginView" class="view-container" style="display: none;"><div class="main-container"><div class="content-card" id="loginFormContainer"></div></div></div>
-    <div id="applicantView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">Staff Recruitment</h1><div id="applicationSection" class="content-card"></div></div></div>
-    <div id="rolesView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">Role Descriptions</h1><div id="rolesList" class="content-card"></div></div></div>
+    <div id="loginView" class="view-container" style="display: none;"><div class="main-container"><div class="glass-card" id="loginFormContainer"></div></div></div>
+    <div id="applicantView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">Staff Recruitment</h1><div id="applicationSection" class="glass-card"></div></div></div>
+    <div id="rolesView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">Role Descriptions</h1><div id="rolesList" class="glass-card"></div></div></div>
     <div id="staffView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">Our Staff Team</h1><div id="staffListContainer" class="staff-list"></div></div></div>
-    <div id="tasksView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">My Tasks</h1><div id="tasksSection" class="content-card"></div></div></div>
+    <div id="tasksView" class="view-container" style="display: none;"><div class="main-container"><h1 class="main-title">My Tasks</h1><div id="tasksSection" class="glass-card"></div></div></div>
     <div id="panelContent" class="view-container" style="display: none;">
         <header class="panel-header"><img src="logo.png" alt="EXP Server Logo" class="server-logo small"><h1>Application Logs</h1><div class="controls"><div class="toggle-switch"><label>Recruitment:</label><label class="switch"><input type="checkbox" id="recruitmentToggle"><span class="slider round"></span></label></div><button id="logoutButton" class="logout-btn">Logout</button></div></header>
         <main class="main-container panel-view"><div id="submissionsContainer" class="log-table-container"></div></main>
@@ -148,10 +113,10 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const DB_USERS = 'staffUsers_v12';
-        const DB_APPS = 'staffApplications_v12';
-        const DB_TASKS = 'staffTasks_v12';
-        const SESSION_USER = 'sessionUser_v12';
+        const DB_USERS = 'staffUsers_v11';
+        const DB_APPS = 'staffApplications_v11';
+        const DB_TASKS = 'staffTasks_v11';
+        const SESSION_USER = 'sessionUser_v11';
         const ROLES = ["Developer", "Leader-Staff", "Lead-Support", "Staff", "Support", "Helper"];
         const STAFF_ROLES = ROLES.filter(r => r !== 'Developer');
         const WEEKLY_TASK_GOAL = 5;
@@ -210,8 +175,10 @@
             if (userApp) {
                 appSection.innerHTML = `<h2>Your Submitted Application</h2><p>This information is final and cannot be edited.</p>
                 <div class="form-grid">
-                    <div class="form-group"><label>GrowID</label><input value="${userApp.growID}" readonly></div><div class="form-group"><label>Age</label><input value="${userApp.age}" readonly></div>
-                    <div class="form-group"><label>Discord</label><input value="${userApp.discord}" readonly></div><div class="form-group"><label>Time Zone</label><input value="${userApp.timezone}" readonly></div>
+                    <div class="form-group"><label>GrowID</label><input value="${userApp.growID}" readonly></div>
+                    <div class="form-group"><label>Age</label><input value="${userApp.age}" readonly></div>
+                    <div class="form-group"><label>Discord</label><input value="${userApp.discord}" readonly></div>
+                    <div class="form-group"><label>Time Zone</label><input value="${userApp.timezone}" readonly></div>
                 </div>
                 <div class="form-group"><label>Weekly Hours</label><input value="${userApp.hours}" readonly></div>
                 <div class="form-group"><label>Ban History</label><textarea readonly>${userApp.banHistory}</textarea></div>
@@ -223,7 +190,25 @@
                 <div class="form-group"><label>You witness a scam in-game. What are your immediate steps?</label><textarea readonly>${userApp.q4_scam}</textarea></div>
                 <div class="form-group"><label>The server is lagging badly. How do you communicate with players?</label><textarea readonly>${userApp.q5_lag}</textarea></div>`;
             } else {
-                appSection.innerHTML = `<h2>Application Form</h2><form id="applicationForm"><h3>Basic Information</h3><div class="form-grid"><div class="form-group"><label for="age">Age</label><input type="number" name="age" id="age" required></div><div class="form-group"><label for="discord">Discord</label><input type="text" name="discord" id="discord" required></div><div class="form-group"><label for="timezone">Time Zone</label><input type="text" name="timezone" id="timezone" required></div><div class="form-group"><label for="hours">Hours/Week</label><input type="text" name="hours" id="hours" required></div></div><h3>Personal Questions</h3><div class="form-group"><label for="banHistory">Have you ever been banned on a private server? If yes, explain.</label><textarea name="banHistory" id="banHistory" rows="2" required></textarea></div><div class="form-group"><label for="strengths">What is your greatest strength as a potential staff member?</label><textarea name="strengths" id="strengths" rows="3" required></textarea></div><h3>Scenario Questions</h3><div class="form-group"><label for="q1_disrespect">A user is disrespectful in a ticket. How do you respond?</label><textarea name="q1_disrespect" id="q1_disrespect" rows="3" required></textarea></div><div class="form-group"><label for="q2_impatience">A user is demanding an immediate fix for their issue. What do you do?</label><textarea name="q2_impatience" id="q2_impatience" rows="3" required></textarea></div><div class="form-group"><label for="q3_spam">A user is spamming your DMs after creating a ticket. What is your course of action?</label><textarea name="q3_spam" id="q3_spam" rows="3" required></textarea></div><div class="form-group"><label for="q4_scam">You witness a scam in-game. What are your immediate steps?</label><textarea name="q4_scam" id="q4_scam" rows="3" required></textarea></div><div class="form-group"><label for="q5_lag">The server is lagging badly and players are complaining. How do you communicate?</label><textarea name="q5_lag" id="q5_lag" rows="3" required></textarea></div><button type="submit">Submit Application</button></form>`;
+                appSection.innerHTML = `<h2>Application Form</h2><form id="applicationForm">
+                    <h3>Basic Information</h3>
+                    <div class="form-grid">
+                        <div class="form-group"><label for="age">Age</label><input type="number" name="age" id="age" required></div>
+                        <div class="form-group"><label for="discord">Discord</label><input type="text" name="discord" id="discord" required></div>
+                        <div class="form-group"><label for="timezone">Time Zone</label><input type="text" name="timezone" id="timezone" required></div>
+                        <div class="form-group"><label for="hours">Hours/Week</label><input type="text" name="hours" id="hours" required></div>
+                    </div>
+                    <h3>Personal Questions</h3>
+                    <div class="form-group"><label for="banHistory">Have you ever been banned on a private server? If yes, explain.</label><textarea name="banHistory" id="banHistory" rows="2" required></textarea></div>
+                    <div class="form-group"><label for="strengths">What is your greatest strength as a potential staff member?</label><textarea name="strengths" id="strengths" rows="3" required></textarea></div>
+                    <h3>Scenario Questions</h3>
+                    <div class="form-group"><label for="q1_disrespect">A user is disrespectful in a ticket. How do you respond?</label><textarea name="q1_disrespect" id="q1_disrespect" rows="3" required></textarea></div>
+                    <div class="form-group"><label for="q2_impatience">A user is demanding an immediate fix for their issue. What do you do?</label><textarea name="q2_impatience" id="q2_impatience" rows="3" required></textarea></div>
+                    <div class="form-group"><label for="q3_spam">A user is spamming your DMs after creating a ticket. What is your course of action?</label><textarea name="q3_spam" id="q3_spam" rows="3" required></textarea></div>
+                    <div class="form-group"><label for="q4_scam">You witness a scam in-game. What are your immediate steps?</label><textarea name="q4_scam" id="q4_scam" rows="3" required></textarea></div>
+                    <div class="form-group"><label for="q5_lag">The server is lagging badly and players are complaining. How do you communicate?</label><textarea name="q5_lag" id="q5_lag" rows="3" required></textarea></div>
+                    <button type="submit">Submit Application</button>
+                </form>`;
             }
         };
 
@@ -239,9 +224,9 @@
             const staffListContainer = document.getElementById('staffListContainer');
             staffListContainer.innerHTML = '';
             const staffMembers = getApps().filter(app => ROLES.includes(app.status));
-            if (staffMembers.length === 0) { staffListContainer.innerHTML = `<div class="content-card empty-state"><h2>No staff members assigned yet.</h2></div>`; return; }
+            if (staffMembers.length === 0) { staffListContainer.innerHTML = `<div class="glass-card empty-state"><h2>No staff members assigned yet.</h2></div>`; return; }
             staffMembers.forEach(app => {
-                const card = document.createElement('div'); card.className = 'content-card staff-card';
+                const card = document.createElement('div'); card.className = 'glass-card staff-card';
                 card.innerHTML = `<div class="grow-id">${app.growID}</div><div class="role-title"><span class="role-animated role-${app.status.toLowerCase().replace('-','')}">${app.status.replace('-', ' ')}</span></div><ul class="staff-details"><li><i class="fa-brands fa-discord"></i> ${app.discord}</li><li><i class="fa-solid fa-cake-candles"></i> Age: ${app.age}</li></ul>`;
                 staffListContainer.appendChild(card);
             });
@@ -259,7 +244,17 @@
                 const userTasks = allTasks.filter(t => t.username === app.username);
                 const acceptedTasks = userTasks.filter(t => t.status === 'Accepted').length;
                 const roleOptions = ROLES.map(role => `<option value="${role}" ${app.status === role ? 'selected' : ''}>${role.replace('-',' ')}</option>`).join('');
-                return `<div class="applicant-log content-card"><div class="log-header" data-username="${app.username}"><strong>${app.growID} (${app.username})</strong><span>Tasks: ${acceptedTasks}/${WEEKLY_TASK_GOAL}</span><span>Status: ${app.status}</span><i class="fa-solid fa-chevron-down"></i></div><div class="applicant-details"><hr style="margin:15px 0; border-color: var(--border-color);"><p><strong>Discord:</strong> ${app.discord} | <strong>Age:</strong> ${app.age} | <strong>Timezone:</strong> ${app.timezone} | <strong>Hours/Week:</strong> ${app.hours}</p><p><strong>Ban History:</strong> ${app.banHistory}</p><p><strong>Strengths:</strong> ${app.strengths}</p><h4 style="margin-top:20px;">Scenario Responses</h4><p><strong>Disrespectful User:</strong> ${app.q1_disrespect}</p><p><strong>Impatient User:</strong> ${app.q2_impatience}</p><p><strong>DM Spammer:</strong> ${app.q3_spam}</p><p><strong>In-Game Scam:</strong> ${app.q4_scam}</p><p><strong>Server Lag:</strong> ${app.q5_lag}</p><div style="display:flex; gap:15px; align-items:center; margin-top:15px;"><select class="status-select" data-username="${app.username}"><option value="Pending" ${app.status === 'Pending' ? 'selected' : ''}>Pending</option>${roleOptions}<option value="Rejected" ${app.status === 'Rejected' ? 'selected' : ''}>Rejected</option></select><button class="delete-btn" data-username="${app.username}">Delete App</button></div><h4 style="margin-top:20px;">Submitted Tasks</h4>${isStaff && userTasks.length > 0 ? userTasks.map(task => `<div class="task-item"><a href="${task.imageUrl}" target="_blank">View Proof</a><select class="task-status-select" data-taskid="${task.id}" data-username="${task.username}"><option value="Pending" ${task.status === 'Pending' ? 'selected' : ''}>Pending</option><option value="Accepted" ${task.status === 'Accepted' ? 'selected' : ''}>Accepted</option><option value="Rejected" ${task.status === 'Rejected' ? 'selected' : ''}>Rejected</option></select></div>`).join('') : '<p class="empty-state" style="padding:10px 0;">No tasks submitted.</p>'}</div></div>`;
+                return `<div class="applicant-log glass-card"><div class="log-header" data-username="${app.username}"><strong>${app.growID} (${app.username})</strong><span>Tasks: ${acceptedTasks}/${WEEKLY_TASK_GOAL}</span><span>Status: ${app.status}</span><i class="fa-solid fa-chevron-down"></i></div><div class="applicant-details">
+                    <hr style="margin:15px 0; border-color: rgba(255,255,255,0.1);">
+                    <p><strong>Discord:</strong> ${app.discord} | <strong>Age:</strong> ${app.age} | <strong>Timezone:</strong> ${app.timezone} | <strong>Hours/Week:</strong> ${app.hours}</p>
+                    <p><strong>Ban History:</strong> ${app.banHistory}</p><p><strong>Strengths:</strong> ${app.strengths}</p>
+                    <h4 style="margin-top:20px;">Scenario Responses</h4>
+                    <p><strong>Disrespectful User:</strong> ${app.q1_disrespect}</p><p><strong>Impatient User:</strong> ${app.q2_impatience}</p>
+                    <p><strong>DM Spammer:</strong> ${app.q3_spam}</p><p><strong>In-Game Scam:</strong> ${app.q4_scam}</p><p><strong>Server Lag:</strong> ${app.q5_lag}</p>
+                    <div style="display:flex; gap:15px; align-items:center; margin-top:15px;"><select class="status-select" data-username="${app.username}"><option value="Pending" ${app.status === 'Pending' ? 'selected' : ''}>Pending</option>${roleOptions}<option value="Rejected" ${app.status === 'Rejected' ? 'selected' : ''}>Rejected</option></select><button class="delete-btn" data-username="${app.username}">Delete App</button></div>
+                    <h4 style="margin-top:20px;">Submitted Tasks</h4>
+                    ${isStaff && userTasks.length > 0 ? userTasks.map(task => `<div class="task-item"><a href="${task.imageUrl}" target="_blank">View Proof</a><select class="task-status-select" data-taskid="${task.id}" data-username="${task.username}"><option value="Pending" ${task.status === 'Pending' ? 'selected' : ''}>Pending</option><option value="Accepted" ${task.status === 'Accepted' ? 'selected' : ''}>Accepted</option><option value="Rejected" ${task.status === 'Rejected' ? 'selected' : ''}>Rejected</option></select></div>`).join('') : '<p class="empty-state" style="padding:10px 0;">No tasks submitted.</p>'}
+                </div></div>`;
             }).join('');
         };
 
